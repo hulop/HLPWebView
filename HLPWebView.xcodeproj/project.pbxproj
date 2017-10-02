@@ -1,0 +1,537 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		7EA121BD1F416ED2005BB92A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121BC1F416ED2005BB92A /* main.m */; };
+		7EA121C01F416ED2005BB92A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121BF1F416ED2005BB92A /* AppDelegate.m */; };
+		7EA121C31F416ED2005BB92A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121C21F416ED2005BB92A /* ViewController.m */; };
+		7EA121C61F416ED2005BB92A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA121C41F416ED2005BB92A /* Main.storyboard */; };
+		7EA121C81F416ED2005BB92A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7EA121C71F416ED2005BB92A /* Assets.xcassets */; };
+		7EA121CB1F416ED2005BB92A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7EA121C91F416ED2005BB92A /* LaunchScreen.storyboard */; };
+		7EA5E50B1F417AB9008470D9 /* HLPWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = A93ED26C1ED2D9BB00B75760 /* HLPWebView.m */; };
+		7EA5E50E1F419054008470D9 /* HLPWebViewCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5E50D1F419054008470D9 /* HLPWebViewCore.m */; };
+		7EA5E5101F4199EE008470D9 /* hlp_bridge.js in Resources */ = {isa = PBXBuildFile; fileRef = 7EA5E50F1F4199EE008470D9 /* hlp_bridge.js */; };
+		7EA5E5111F41A642008470D9 /* HLPWebView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED25F1ED2D91300B75760 /* HLPWebView.framework */; };
+		7EA5E5121F41A642008470D9 /* HLPWebView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED25F1ED2D91300B75760 /* HLPWebView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		A90B734A1ED401260082E149 /* ios_bridge.js in Resources */ = {isa = PBXBuildFile; fileRef = A90B73491ED401260082E149 /* ios_bridge.js */; };
+		A929F6E11EEFC9FC00A8DAF4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED2751ED2DBB000B75760 /* Foundation.framework */; };
+		A929F6E21EEFCA0800A8DAF4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED2731ED2DBA900B75760 /* UIKit.framework */; };
+		A93ED2631ED2D91300B75760 /* HLPWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = A93ED2611ED2D91300B75760 /* HLPWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		A93ED26D1ED2D9BB00B75760 /* HLPWebViewCore.h in Headers */ = {isa = PBXBuildFile; fileRef = A93ED26B1ED2D9BB00B75760 /* HLPWebViewCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		7EA5E5131F41A642008470D9 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7EDEDC141D1E0C6800AC111A /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = A93ED25E1ED2D91300B75760;
+			remoteInfo = HLPWebView;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		7EA5E5151F41A642008470D9 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				7EA5E5121F41A642008470D9 /* HLPWebView.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		7EA121B91F416ED2005BB92A /* HLPWebViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPWebViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		7EA121BC1F416ED2005BB92A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		7EA121BE1F416ED2005BB92A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		7EA121BF1F416ED2005BB92A /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		7EA121C11F416ED2005BB92A /* ViewController.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ViewController.h; sourceTree = "<group>"; };
+		7EA121C21F416ED2005BB92A /* ViewController.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ViewController.m; sourceTree = "<group>"; };
+		7EA121C51F416ED2005BB92A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		7EA121C71F416ED2005BB92A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		7EA121CA1F416ED2005BB92A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		7EA121CC1F416ED2005BB92A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7EA5E50D1F419054008470D9 /* HLPWebViewCore.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLPWebViewCore.m; sourceTree = "<group>"; };
+		7EA5E50F1F4199EE008470D9 /* hlp_bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = hlp_bridge.js; sourceTree = "<group>"; };
+		A90B73491ED401260082E149 /* ios_bridge.js */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.javascript; path = ios_bridge.js; sourceTree = "<group>"; };
+		A93ED25F1ED2D91300B75760 /* HLPWebView.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = HLPWebView.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		A93ED2611ED2D91300B75760 /* HLPWebView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HLPWebView.h; sourceTree = "<group>"; };
+		A93ED2621ED2D91300B75760 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		A93ED26B1ED2D9BB00B75760 /* HLPWebViewCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPWebViewCore.h; sourceTree = "<group>"; };
+		A93ED26C1ED2D9BB00B75760 /* HLPWebView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = HLPWebView.m; sourceTree = "<group>"; };
+		A93ED2731ED2DBA900B75760 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		A93ED2751ED2DBB000B75760 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		7EA121B61F416ED2005BB92A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EA5E5111F41A642008470D9 /* HLPWebView.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93ED25B1ED2D91300B75760 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A929F6E11EEFC9FC00A8DAF4 /* Foundation.framework in Frameworks */,
+				A929F6E21EEFCA0800A8DAF4 /* UIKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0F5EA397BCF0C5EEF08F5111 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				A93ED2751ED2DBB000B75760 /* Foundation.framework */,
+				A93ED2731ED2DBA900B75760 /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		7EA121BA1F416ED2005BB92A /* HLPWebViewTest */ = {
+			isa = PBXGroup;
+			children = (
+				7EA121BE1F416ED2005BB92A /* AppDelegate.h */,
+				7EA121BF1F416ED2005BB92A /* AppDelegate.m */,
+				7EA121C11F416ED2005BB92A /* ViewController.h */,
+				7EA121C21F416ED2005BB92A /* ViewController.m */,
+				7EA121C41F416ED2005BB92A /* Main.storyboard */,
+				7EA121C71F416ED2005BB92A /* Assets.xcassets */,
+				7EA121C91F416ED2005BB92A /* LaunchScreen.storyboard */,
+				7EA121CC1F416ED2005BB92A /* Info.plist */,
+				7EA121BB1F416ED2005BB92A /* Supporting Files */,
+			);
+			path = HLPWebViewTest;
+			sourceTree = "<group>";
+		};
+		7EA121BB1F416ED2005BB92A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				7EA121BC1F416ED2005BB92A /* main.m */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		7EDEDC131D1E0C6800AC111A = {
+			isa = PBXGroup;
+			children = (
+				A93ED2601ED2D91300B75760 /* HLPWebView */,
+				7EA121BA1F416ED2005BB92A /* HLPWebViewTest */,
+				7EDEDC1D1D1E0C6800AC111A /* Products */,
+				0F5EA397BCF0C5EEF08F5111 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		7EDEDC1D1D1E0C6800AC111A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				A93ED25F1ED2D91300B75760 /* HLPWebView.framework */,
+				7EA121B91F416ED2005BB92A /* HLPWebViewTest.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		A93ED2601ED2D91300B75760 /* HLPWebView */ = {
+			isa = PBXGroup;
+			children = (
+				A93ED2611ED2D91300B75760 /* HLPWebView.h */,
+				A93ED26C1ED2D9BB00B75760 /* HLPWebView.m */,
+				A93ED26B1ED2D9BB00B75760 /* HLPWebViewCore.h */,
+				7EA5E50D1F419054008470D9 /* HLPWebViewCore.m */,
+				A90B73491ED401260082E149 /* ios_bridge.js */,
+				7EA5E50F1F4199EE008470D9 /* hlp_bridge.js */,
+				A93ED2621ED2D91300B75760 /* Info.plist */,
+			);
+			path = HLPWebView;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		A93ED25C1ED2D91300B75760 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				A93ED2631ED2D91300B75760 /* HLPWebView.h in Headers */,
+				A93ED26D1ED2D9BB00B75760 /* HLPWebViewCore.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		7EA121B81F416ED2005BB92A /* HLPWebViewTest */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 7EA121CD1F416ED2005BB92A /* Build configuration list for PBXNativeTarget "HLPWebViewTest" */;
+			buildPhases = (
+				7EA121B51F416ED2005BB92A /* Sources */,
+				7EA121B61F416ED2005BB92A /* Frameworks */,
+				7EA121B71F416ED2005BB92A /* Resources */,
+				7EA5E5151F41A642008470D9 /* Embed Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				7EA5E5141F41A642008470D9 /* PBXTargetDependency */,
+			);
+			name = HLPWebViewTest;
+			productName = HLPWebViewTest;
+			productReference = 7EA121B91F416ED2005BB92A /* HLPWebViewTest.app */;
+			productType = "com.apple.product-type.application";
+		};
+		A93ED25E1ED2D91300B75760 /* HLPWebView */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = A93ED2661ED2D91300B75760 /* Build configuration list for PBXNativeTarget "HLPWebView" */;
+			buildPhases = (
+				A93ED25A1ED2D91300B75760 /* Sources */,
+				A93ED25B1ED2D91300B75760 /* Frameworks */,
+				A93ED25C1ED2D91300B75760 /* Headers */,
+				A93ED25D1ED2D91300B75760 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = HLPWebView;
+			productName = HLPWebView;
+			productReference = A93ED25F1ED2D91300B75760 /* HLPWebView.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		7EDEDC141D1E0C6800AC111A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0830;
+				ORGANIZATIONNAME = HULOP;
+				TargetAttributes = {
+					7EA121B81F416ED2005BB92A = {
+						CreatedOnToolsVersion = 8.3.3;
+						ProvisioningStyle = Manual;
+					};
+					A93ED25E1ED2D91300B75760 = {
+						CreatedOnToolsVersion = 8.3.2;
+						ProvisioningStyle = Manual;
+					};
+				};
+			};
+			buildConfigurationList = 7EDEDC171D1E0C6800AC111A /* Build configuration list for PBXProject "HLPWebView" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+				ja,
+				"en-US",
+			);
+			mainGroup = 7EDEDC131D1E0C6800AC111A;
+			productRefGroup = 7EDEDC1D1D1E0C6800AC111A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				A93ED25E1ED2D91300B75760 /* HLPWebView */,
+				7EA121B81F416ED2005BB92A /* HLPWebViewTest */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		7EA121B71F416ED2005BB92A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EA121CB1F416ED2005BB92A /* LaunchScreen.storyboard in Resources */,
+				7EA121C81F416ED2005BB92A /* Assets.xcassets in Resources */,
+				7EA121C61F416ED2005BB92A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93ED25D1ED2D91300B75760 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EA5E5101F4199EE008470D9 /* hlp_bridge.js in Resources */,
+				A90B734A1ED401260082E149 /* ios_bridge.js in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		7EA121B51F416ED2005BB92A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EA121C31F416ED2005BB92A /* ViewController.m in Sources */,
+				7EA121C01F416ED2005BB92A /* AppDelegate.m in Sources */,
+				7EA121BD1F416ED2005BB92A /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		A93ED25A1ED2D91300B75760 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				7EA5E50B1F417AB9008470D9 /* HLPWebView.m in Sources */,
+				7EA5E50E1F419054008470D9 /* HLPWebViewCore.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		7EA5E5141F41A642008470D9 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = A93ED25E1ED2D91300B75760 /* HLPWebView */;
+			targetProxy = 7EA5E5131F41A642008470D9 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		7EA121C41F416ED2005BB92A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7EA121C51F416ED2005BB92A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		7EA121C91F416ED2005BB92A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				7EA121CA1F416ED2005BB92A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		7EA121CE1F416ED2005BB92A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = HLPWebViewTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				ONLY_ACTIVE_ARCH = YES;
+				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPWebViewTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Debug;
+		};
+		7EA121CF1F416ED2005BB92A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				DEVELOPMENT_TEAM = "";
+				INFOPLIST_FILE = HLPWebViewTest/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPWebViewTest;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+			};
+			name = Release;
+		};
+		7EDEDC311D1E0C6800AC111A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		7EDEDC321D1E0C6800AC111A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.3;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		A93ED2641ED2D91300B75760 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = HLPWebView/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPWebView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Debug;
+		};
+		A93ED2651ED2D91300B75760 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				INFOPLIST_FILE = HLPWebView/Info.plist;
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 10.3;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = org.hulop.HLPWebView;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
+				SKIP_INSTALL = YES;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VERSIONING_SYSTEM = "apple-generic";
+				VERSION_INFO_PREFIX = "";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		7EA121CD1F416ED2005BB92A /* Build configuration list for PBXNativeTarget "HLPWebViewTest" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EA121CE1F416ED2005BB92A /* Debug */,
+				7EA121CF1F416ED2005BB92A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		7EDEDC171D1E0C6800AC111A /* Build configuration list for PBXProject "HLPWebView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				7EDEDC311D1E0C6800AC111A /* Debug */,
+				7EDEDC321D1E0C6800AC111A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		A93ED2661ED2D91300B75760 /* Build configuration list for PBXNativeTarget "HLPWebView" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				A93ED2641ED2D91300B75760 /* Debug */,
+				A93ED2651ED2D91300B75760 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 7EDEDC141D1E0C6800AC111A /* Project object */;
+}
