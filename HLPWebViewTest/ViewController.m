@@ -31,7 +31,9 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     // Do any additional setup after loading the view, typically from a nib.
-    
+    WKWebViewConfiguration *config = [[WKWebViewConfiguration alloc] init];
+    _webView = [[HLPWebView alloc] initWithFrame:CGRectMake(0,0,0,0) configuration:config];
+    [self.view addSubview:_webView];
     _webView.isDeveloperMode = NO;
     _webView.userMode = @"user_general";
     _webView.delegate = self;
@@ -40,10 +42,10 @@
                         @"serverContext":@"",
                         @"usesHttps":@(YES)
                         };
-
+    [_webView setFullScreenForView:self.view];
 }
 
-- (void)webViewDidInsertBridge:(UIWebView *)webView
+- (void)webViewDidInsertBridge:(WKWebView *)webView
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
 }

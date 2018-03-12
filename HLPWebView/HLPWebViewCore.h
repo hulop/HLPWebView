@@ -22,14 +22,15 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
-@protocol HLPWebViewCoreDelegate <UIWebViewDelegate>
+@protocol HLPWebViewCoreDelegate <WKUIDelegate, WKNavigationDelegate>
 @optional
-- (void)webViewDidInsertBridge:(UIWebView *_Nonnull)webView;
-- (void)webView:(UIWebView *_Nonnull)webView openURL:(NSURL *_Nonnull)url;
+- (void)webViewDidInsertBridge:(WKWebView *_Nonnull)webView;
+- (void)webView:(WKWebView *_Nonnull)webView openURL:(NSURL *_Nonnull)url;
 @end
 
-@interface HLPWebViewCore : UIWebView <UIWebViewDelegate>
+@interface HLPWebViewCore : WKWebView <WKUIDelegate, WKNavigationDelegate, WKScriptMessageHandler>
 
 @property (readonly) BOOL isReady;
 @property (nullable, nonatomic, assign) id<HLPWebViewCoreDelegate> delegate;
@@ -41,7 +42,7 @@
 
 - (void)setLocationHash:(NSString *_Nonnull)hash;
 - (void)reload;
-- (void)registerNativeFunc:(void (^_Nonnull)(NSDictionary * _Nonnull param, UIWebView * _Nonnull webView))func withName:(NSString *_Nonnull)name inComponent:(NSString *_Nonnull)component;
+- (void)registerNativeFunc:(void (^_Nonnull)(NSDictionary * _Nonnull param, WKWebView * _Nonnull webView))func withName:(NSString *_Nonnull)name inComponent:(NSString *_Nonnull)component;
 
 @end
 

@@ -25,7 +25,7 @@
 
 @interface ViewController : UIViewController <HLPWebViewDelegate>
 
-@property (weak, nonatomic) IBOutlet HLPWebView *webView;
+@property (nonatomic) IBOutlet HLPWebView *webView;
 
 @end
 

@@ -37,40 +37,69 @@
 
 @synthesize delegate = _delegate;
 
-- (void)_init
-{
-    [super setDelegate:self];
-    self.scrollView.bounces = NO;
-    self.suppressesIncrementalRendering = YES;
-    _funcs = [[NSMutableDictionary alloc] init];
-    _callbacks = [[NSMutableDictionary alloc] init];
-}
-
 - (instancetype)init
 {
-    self = [super init];
-    if (self) {
-        [self _init];
-    }
-    return self;
+    [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
+    return nil;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self _init];
-    }
-    return self;
+    [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
+    return nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
+    return nil;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame configuration:(nonnull WKWebViewConfiguration *)configuration
+{
+    self = [super initWithFrame:frame configuration:configuration];
     if (self) {
-        [self _init];
+        _funcs = [[NSMutableDictionary alloc] init];
+        _callbacks = [[NSMutableDictionary alloc] init];
+        
+        [super setUIDelegate:self];
+        [super setNavigationDelegate:self];
+        self.scrollView.bounces = NO;
+        
+        if (!self.configuration.userContentController) {
+            self.configuration.userContentController = [[WKUserContentController alloc] init];
+        }        
+        NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
+        NSString *path = [bundle pathForResource:@"ios_bridge" ofType:@"js"];
+        NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+        [self.configuration.userContentController addUserScript: userScript];
+        [self.configuration.userContentController addScriptMessageHandler:self name:@"nativeCallbackHandler"];
     }
     return self;
+}
+
+
+- (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message
+{
+    NSDictionary *body = message.body;
+   
+    NSString *component = body[@"component"];
+    NSString *func = body[@"func"];
+    NSDictionary *params = body[@"params"];
+
+    NSString *name = [NSString stringWithFormat:@"%@.%@", component, func];
+    NSString *name2 = [NSString stringWithFormat:@"%@.%@.webview", component, func];
+    
+    NSString *callbackStr = [params objectForKey:@"callback"];
+    if (callbackStr) {
+        [_callbacks setObject:callbackStr forKey:name];
+        [_callbacks setObject:self forKey:name2];
+    }
+    void (^f)(NSDictionary *, WKWebView *) = (void (^)(NSDictionary *, WKWebView *))[_funcs objectForKey:name];
+    if (f) {
+        f(params, self);
+    }
 }
 
 - (void)setDelegate:(id<HLPWebViewCoreDelegate>)delegate
@@ -89,7 +118,6 @@
     _serverHost = nil;
     _serverContext = nil;
 }
-
 
 - (void)setConfig:(NSDictionary *)config
 {
@@ -123,7 +151,7 @@
 - (void)setLocationHash:(NSString *)hash
 {
     NSString *script = [NSString stringWithFormat:@"location.hash=\"%@\"", hash];
-    [self stringByEvaluatingJavaScriptFromString:script];
+    [self evaluateJavaScript:script completionHandler:nil];
 }
 
 - (void)reload
@@ -133,133 +161,67 @@
     _lastRequestTime = [[NSDate date] timeIntervalSince1970];
 }
 
-- (void)registerNativeFunc:(void (^)(NSDictionary *, UIWebView *))func withName:(NSString *)name inComponent:(NSString *)component
+- (void)registerNativeFunc:(void (^)(NSDictionary *, WKWebView *))func withName:(NSString *)name inComponent:(NSString *)component
 {
     [_funcs setObject:[func copy] forKey:[NSString stringWithFormat:@"%@.%@", component, name]];
 }
 
-#pragma mark - private method
-
-- (void)waitForReady:(NSTimer *)timer
-{
-    NSString *ret = [self stringByEvaluatingJavaScriptFromString:@"(function(){return document.readyState != 'loading'})();"];
-    
-    if ([ret isEqualToString:@"true"]) {
-        [timer invalidate];
-        _isReady = YES;
-        [self insertBridge];
-        return;
-    }
-    NSTimeInterval now = [[NSDate date] timeIntervalSince1970];
-    if (now - _lastRequestTime > LOADING_TIMEOUT) {
-        [timer invalidate];
-        [self stopLoading];
-        if ([_delegate respondsToSelector:@selector(webView:didFailLoadWithError:)]) {
-            NSError *error = [[NSError alloc] initWithDomain:@"ConnectionError"
-                                                        code:1001
-                                                    userInfo:nil];
-            [_delegate webView:self didFailLoadWithError:error];
-        }
-    }
-}
-
-- (void)insertBridge
-{
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
-    NSString *path = [bundle pathForResource:@"ios_bridge" ofType:@"js"];
-    NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    
-    [self stringByEvaluatingJavaScriptFromString:script];
-    [self fireWebViewInsertBridge:self];
-}
-
 #pragma mark - HLPWebViewCoreDelegate
 
-- (void)fireWebView:(UIWebView *)webView openURL:(NSURL*)url
+- (void)fireWebView:(WKWebView *)webView openURL:(NSURL*)url
 {
     if ([_delegate respondsToSelector:@selector(webView:openURL:)]) {
         [_delegate webView:self openURL:url];
     }
 }
 
-- (void)fireWebViewInsertBridge:(UIWebView *)webView
+- (void)fireWebViewInsertBridge:(WKWebView *)webView
 {
     if ([_delegate respondsToSelector:@selector(webViewDidInsertBridge:)]) {
         [_delegate webViewDidInsertBridge:webView];
     }
 }
 
-#pragma mark - UIWebViewDelegate
+#pragma mark - WKWebViewDelegate
 
-- (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType
-{
-    NSURL *url = [request URL];
-    
-    if ([@"about:blank" isEqualToString:[url absoluteString]]) {
-        return NO;
-    } else if ([@"native" isEqualToString:[url scheme]]) {
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [webView stringByEvaluatingJavaScriptFromString:@"$IOS.readyForNext=true;"];
-        });
-        NSString *component = [url host];
-        NSString *func = [[url pathComponents] objectAtIndex:1];
-        NSString *paramString = [url query];
-        
-        NSMutableDictionary *param = [[NSMutableDictionary alloc] init];
-        NSArray *keyValues = [paramString componentsSeparatedByString:@"&"];
-        for (int i = 0; i < [keyValues count]; i++) {
-            NSArray *keyValue = [[keyValues objectAtIndex:i] componentsSeparatedByString:@"="];
-            if ([keyValue count] == 2) {
-                NSString *key = [keyValue objectAtIndex:0];
-                NSString *value = [[keyValue objectAtIndex:1] stringByRemovingPercentEncoding];
-                [param setObject:value forKey:key];
-            }
-        }
-        NSString *name = [NSString stringWithFormat:@"%@.%@", component, func];
-        NSString *name2 = [NSString stringWithFormat:@"%@.%@.webview", component, func];
-        NSString *callbackStr = [param objectForKey:@"callback"];
-        if (callbackStr) {
-            [_callbacks setObject:callbackStr forKey:name];
-            [_callbacks setObject:webView forKey:name2];
-        }
-        void (^f)(NSDictionary *, UIWebView *) = (void (^)(NSDictionary *, UIWebView *))[_funcs objectForKey:name];
-        if (f) {
-            f(param, webView);
-        }
-        return NO;
-    }
-    
-    NSRange range = [request.URL.absoluteString rangeOfString:_serverHost];
-    if (range.location == NSNotFound) {
-        [self fireWebView:webView openURL:request.URL];
-        return NO;
-    }
-    return YES;
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationResponse:(WKNavigationResponse *)navigationResponse decisionHandler:(void (^)(WKNavigationResponsePolicy))decisionHandler {
+    decisionHandler(WKNavigationResponsePolicyAllow);
 }
 
-- (void)webViewDidStartLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView decidePolicyForNavigationAction:(WKNavigationAction *)navigationAction decisionHandler:(void (^)(WKNavigationActionPolicy))decisionHandler
 {
+    if (_serverHost) {
+        NSURLRequest *request = navigationAction.request;
+        NSRange range = [request.URL.absoluteString rangeOfString:_serverHost];
+        if (range.location == NSNotFound) {
+            [self fireWebView:webView openURL:request.URL];
+            decisionHandler(WKNavigationActionPolicyCancel);
+            return;
+        }
+    }
+    decisionHandler(WKNavigationActionPolicyAllow);
+}
+
+- (void)webView:(WKWebView *)webView didStartProvisionalNavigation:(WKNavigation *)navigation {
     NSLog(@"webViewDidStartLoad");
-    [NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(waitForReady:) userInfo:nil repeats:YES];
-    if ([_delegate respondsToSelector:@selector(webViewDidStartLoad:)]) {
-        [_delegate webViewDidStartLoad:webView];
+
+    if ([_delegate respondsToSelector:@selector(webView:didStartProvisionalNavigation:)]) {
+        [_delegate webView:webView didStartProvisionalNavigation:navigation];
     }
 }
-
-- (void)webViewDidFinishLoad:(UIWebView *)webView
+- (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
-    int status = [[[webView request] valueForHTTPHeaderField:@"Status"] intValue];
-    
-    NSLog(@"webViewDidFinishLoad %d %@", status, webView.request.URL.absoluteString);
-    if (status == 404) {
-    }
-    if ([_delegate respondsToSelector:@selector(webViewDidFinishLoad:)]) {
-        [_delegate webViewDidFinishLoad:webView];
+    //TODO
+    //int status = [[[navigation request] valueForHTTPHeaderField:@"Status"] intValue];
+    //NSLog(@"webViewDidFinishLoad %d %@", status, webView.request.URL.absoluteString);
+    //if (status == 404) {
+    //}
+    if ([_delegate respondsToSelector:@selector(webView:didFinishNavigation:)]) {
+        [_delegate webView:webView didFinishNavigation:navigation];
     }
 }
 
-- (void)webView:(UIWebView *)webView didFailLoadWithError:(NSError *)error
+- (void)webView:(WKWebView *)webView didFailLoadWithError:(NSError *)error
 {
     NSLog(@"%@", error);
     double delayInSeconds = 1.0;

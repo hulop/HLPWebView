@@ -22,10 +22,11 @@
 
 (function() {
   window.ios_mobile_bridge = {
-    speak: function(text, flush) {
+    speak: function(text, flush, callback) {
       $IOS.callNative('SpeechSynthesizer', 'speak', {
                     'text': text,
-                    'flush': flush
+                    'flush': flush,
+                    'callbackname': callback
                     });
     },
     setCallback: function(name) {
@@ -62,9 +63,10 @@
     mIsSpeaking: false
   }
 
-  if (window.$hulop && window.$hulop.mobile_ready) {
-    window.$hulop.mobile_ready(ios_mobile_bridge);
-    return "SUCCESS";
-  }
-  return "ERROR";
+  var temp = setInterval(function() {
+    if (window.$hulop && window.$hulop.mobile_ready) {
+      window.$hulop.mobile_ready(ios_mobile_bridge);
+      clearInterval(temp);
+    }
+  },100);
 })();

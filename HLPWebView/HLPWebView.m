@@ -24,7 +24,7 @@
 
 #define UI_PAGE @"%@://%@/%@mobile.jsp?noheader&noclose&id=%@"
 
-// override UIWebView accessibility to prevent reading Map contents
+// override WKWebView accessibility to prevent reading Map contents
 @implementation HLPWebView {
     NSString *_callback;
 }
@@ -38,36 +38,50 @@
 
 - (NSArray *)accessibilityElements
 {
-    return nil;
+    if (_isAccessible) {
+        return [super accessibilityElements];
+    } else {
+        return nil;
+    }
 }
 
 - (NSInteger)accessibilityElementCount
 {
-    return 0;
+    if (_isAccessible) {
+        return [super accessibilityElementCount];
+    } else {
+        return 0;
+    }
 }
 
 - (instancetype)init
 {
-    self = [super init];
-    if (self) {
-        [self registerJSFunctions];
-    }
-    return self;
+    [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
+    return nil;
 }
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
-    self = [super initWithCoder:aDecoder];
-    if (self) {
-        [self registerJSFunctions];
-    }
-    return self;
+    [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
+    return nil;
 }
 
 - (instancetype)initWithFrame:(CGRect)frame
 {
-    self = [super initWithFrame:frame];
+    [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
+    return nil;
+}
+
+- (instancetype)initWithFrame:(CGRect)frame configuration:(nonnull WKWebViewConfiguration *)configuration
+{
+    self = [super initWithFrame:frame configuration:configuration];
     if (self) {
+        NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
+        NSString *path = [bundle pathForResource:@"hlp_bridge" ofType:@"js"];
+        NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+        WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+        [self.configuration.userContentController addUserScript: userScript];
+        
         [self registerJSFunctions];
     }
     return self;
@@ -118,36 +132,39 @@
 
 - (void) registerJSFunctions
 {
-    [self registerNativeFunc:^(NSDictionary *param, UIWebView *webView) {
+    [self registerNativeFunc:^(NSDictionary *param, WKWebView *webView) {
         NSString *text = [param objectForKey:@"text"];
         BOOL flush = [[param objectForKey:@"flush"] boolValue];
-        if ([_tts respondsToSelector:@selector(speak:force:)]) {
-            [_tts speak:text force:flush];
+        if ([_tts respondsToSelector:@selector(speak:force:completionHandler:)]) {
+            [_tts speak:text force:flush completionHandler:^{
+                NSString *name = [param objectForKey:@"callbackname"];
+                [webView evaluateJavaScript:[NSString stringWithFormat:@"%@.%@()", _callback, name] completionHandler:nil];
+            }];
         }
     }
                   withName:@"speak"
                inComponent:@"SpeechSynthesizer"];
     
-    [self registerNativeFunc:^(NSDictionary *param, UIWebView *wv) {
+    [self registerNativeFunc:^(NSDictionary *param, WKWebView *wv) {
         NSString *result = @"false";
         if ([_tts respondsToSelector:@selector(isSpeaking)]) {
             result = [_tts isSpeaking] ? @"true" : @"false";
         }
         NSString *name = param[@"callbackname"];
-        [wv stringByEvaluatingJavaScriptFromString:[NSString stringWithFormat:@"%@.%@(%@)", _callback, name, result]];
+        [wv evaluateJavaScript:[NSString stringWithFormat:@"%@.%@(%@)", _callback, name, result] completionHandler:nil];
     }
                   withName:@"isSpeaking"
                inComponent:@"SpeechSynthesizer"];
-    [self registerNativeFunc:^(NSDictionary *param, UIWebView *wv) {
+    [self registerNativeFunc:^(NSDictionary *param, WKWebView *wv) {
         if ([param objectForKey:@"value"]) {
             _callback = [param objectForKey:@"value"];
-            //NSLog(@"callback method is %@", callback);
+            NSLog(@"callback method is %@", _callback);
             [self updatePreferences];
         }
     }
                   withName:@"callback"
                inComponent:@"Property"];
-    [self registerNativeFunc:^(NSDictionary *param, UIWebView *wv) {
+    [self registerNativeFunc:^(NSDictionary *param, WKWebView *wv) {
         if ([_delegate respondsToSelector:@selector(webView:didChangeLatitude:longitude:floor:synchronized:)]) {
             [_delegate webView:self didChangeLatitude:[param[@"lat"] doubleValue] longitude:[param[@"lng"] doubleValue] floor:[param[@"floor"] doubleValue] synchronized:[param[@"sync"] boolValue]];
         }
@@ -155,7 +172,7 @@
                   withName:@"mapCenter"
                inComponent:@"Property"];
     
-    [self registerNativeFunc:^(NSDictionary *param, UIWebView *webView) {
+    [self registerNativeFunc:^(NSDictionary *param, WKWebView *webView) {
         NSString *text = param[@"text"];
         //NSLog(@"%@", text);
         
@@ -185,7 +202,7 @@
                   withName:@"log"
                inComponent:@"System"];
     
-    [self registerNativeFunc:^(NSDictionary *param, UIWebView *webView) {
+    [self registerNativeFunc:^(NSDictionary *param, WKWebView *webView) {
         if ([_tts respondsToSelector:@selector(vibrate)]) {
             [_tts vibrate];
         }
@@ -199,22 +216,22 @@
 {
     switch (control) {
         case HLPWebviewControlRouteSearchOptionButton:
-            [self stringByEvaluatingJavaScriptFromString:@"$('a[href=\"#settings\"]').click()"];
+            [self evaluateJavaScript:@"$('a[href=\"#settings\"]').click()" completionHandler:nil];
             break;
         case HLPWebviewControlRouteSearchButton:
-            [self stringByEvaluatingJavaScriptFromString:@"$('a[href=\"#control\"]').click()"];
+            [self evaluateJavaScript:@"$('a[href=\"#control\"]').click()" completionHandler:nil];
             break;
         case HLPWebviewControlDoneButton:
-            [self stringByEvaluatingJavaScriptFromString:@"$('div[role=banner]:visible a').click()"];
+            [self evaluateJavaScript:@"$('div[role=banner]:visible a').click()" completionHandler:nil];
             break;
         case HLPWebviewControlEndNavigation:
-            [self stringByEvaluatingJavaScriptFromString:@"$('#end_navi').click()"];
+            [self evaluateJavaScript:@"$('#end_navi').click()" completionHandler:nil];
             break;
         case HLPWebviewControlBackToControl:
-            [self stringByEvaluatingJavaScriptFromString:@"$('div[role=banner]:visible a').click()"];
+            [self evaluateJavaScript:@"$('div[role=banner]:visible a').click()" completionHandler:nil];
             break;
         default:
-            [self stringByEvaluatingJavaScriptFromString:@"$hulop.map.resetState()"];
+            [self evaluateJavaScript:@"$hulop.map.resetState()" completionHandler:nil];
             //[self evalScript:@"$('a[href=\"#map-page\"]:visible').click()"];
             break;
     }
@@ -234,22 +251,24 @@
     //NSLog(@"%@", script);
 
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self stringByEvaluatingJavaScriptFromString:script];
+        [self evaluateJavaScript:script completionHandler:nil];
     });
 }
 
 
-- (NSDictionary *)getState
+- (void)getStateWithCompletionHandler:(void (^)(NSDictionary * _Nonnull))completion
 {
-    NSString *state = [self stringByEvaluatingJavaScriptFromString:@"(function(){return JSON.stringify($hulop.map.getState());})()"];
-    NSError *error = nil;
-    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[state dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error];
-    if (json) {
-        return json;
-    } else {
-        NSLog(@"%@", error.localizedDescription);
-    }
-    return nil;
+    [self evaluateJavaScript:@"(function(){return JSON.stringify($hulop.map.getState());})()" completionHandler:^(id _Nullable ret, NSError * _Nullable error) {
+        NSString *state = ret;
+        NSError *error2 = nil;
+        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[state dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error2];
+        if (json) {
+            completion(json);
+        } else {
+            NSLog(@"%@", error.localizedDescription);
+        }
+        completion(nil);
+    }];
 }
 
 
@@ -270,7 +289,7 @@
     NSString *script = [NSString stringWithFormat:@"%@.onPreferences(%@);", _callback, jsonstr];
     //NSLog(@"%@", script);
     dispatch_async(dispatch_get_main_queue(), ^{
-        [self stringByEvaluatingJavaScriptFromString:script];
+        [self evaluateJavaScript:script completionHandler:nil];
     });
 }
 
@@ -304,38 +323,57 @@
 
 #pragma mark - override HLPWebViewCoreDelegate
 
-- (void)fireWebViewInsertBridge:(UIWebView *)webView
-{
-    [NSTimer scheduledTimerWithTimeInterval:0.5 repeats:YES block:^(NSTimer * _Nonnull timer) {
-        if ([self insertHLPBridge]) {
-            [timer invalidate];
-            [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
-                if (_callback != nil) {
-                    NSLog(@"%@", NSStringFromSelector(_cmd));
-                    [timer invalidate];                    
-                    if ([_delegate respondsToSelector:@selector(webViewDidInsertBridge:)]) {
-                        [_delegate webViewDidInsertBridge:webView];
-                    }
-                }
-            }];
-        }
-    }];
-}
-
--(BOOL)insertHLPBridge
+- (void)fireWebViewInsertBridge:(WKWebView *)webView
 {
     NSLog(@"%@", NSStringFromSelector(_cmd));
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self insertHLPBridgeWithCompletion:^(BOOL result) {
+            if (result) {
+                [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
+                    if (_callback != nil) {
+                        NSLog(@"callback is ready %@", _callback);
+                        [timer invalidate];
+                        if ([_delegate respondsToSelector:@selector(webViewDidInsertBridge:)]) {
+                            [_delegate webViewDidInsertBridge:webView];
+                        }
+                    }
+                }];
+            } else {
+                [self fireWebViewInsertBridge:webView];
+            }
+        }];
+    });
+}
+
+-(void)insertHLPBridgeWithCompletion:(void(^_Nonnull)(BOOL))completion
+{
     NSBundle *bundle = [NSBundle bundleForClass:[HLPWebView class]];
     NSString *path = [bundle pathForResource:@"hlp_bridge" ofType:@"js"];
     NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     
-    NSString *result = [self stringByEvaluatingJavaScriptFromString:script];
-    return [result isEqualToString:@"SUCCESS"];
+    [self evaluateJavaScript:script completionHandler:^(id _Nullable result, NSError * _Nullable error) {
+        NSLog(@"%@ - %@", NSStringFromSelector(_cmd), result);
+        completion([result isEqualToString:@"SUCCESS"]);
+    }];
 }
 
-- (void)webView:(UIWebView *)webView openURL:(NSURL *)url
+- (void)webView:(WKWebView *)webView openURL:(NSURL *)url
 {
     [_delegate webView:webView openURL:url];
+}
+
+- (void)setFullScreenForView:(UIView *)view
+{
+    self.translatesAutoresizingMaskIntoConstraints = NO;
+    if (@available(iOS 11.0, *)) {
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view.safeAreaLayoutGuide attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view.safeAreaLayoutGuide attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+    } else {
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeBottom relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeBottom multiplier:1.0 constant:0]];
+        [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeTop relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeTop multiplier:1.0 constant:0]];
+    }
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeLeft relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeLeft multiplier:1.0 constant:0]];
+    [view addConstraint:[NSLayoutConstraint constraintWithItem:self attribute:NSLayoutAttributeRight relatedBy:NSLayoutRelationEqual toItem:view attribute:NSLayoutAttributeRight multiplier:1.0 constant:0]];
 }
 
 

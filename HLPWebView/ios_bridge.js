@@ -23,32 +23,13 @@
 (function() {
   window.$IOS = {
 
-    'getFrame': function() {
-      var frame = document.getElementById('__native__call__iframe__');
-      if (!frame) {
-        frame = document.createElement('iframe');
-        frame.id = '__native__call__iframe__';
-        frame.style.position = 'absolute';
-        frame.style.left = '-1px';
-        frame.style.top = '-1px';
-        frame.style.width = '1px';
-        frame.style.height = '1px';
-        frame.border = "0";
-        document.body.appendChild(frame);
-      }
-      return frame;
-    },
     'callNative': function(component, func, params) {
-      this.queue.push({
-        component: component,
-        func: func,
+      var message = {
+	component: component,
+	func: func,
         params: params
-      });
-      if (!this.interval) {
-        this.interval = setInterval(function() {
-          $IOS.processNext();
-        }, 0);
-      }
+      };
+      window.webkit.messageHandlers.nativeCallbackHandler.postMessage(message);
     },
     'callNativeWithCallback': function(component, func, params, callback) {
       var id = (new Date()).getTime();
@@ -56,54 +37,10 @@
       params.callback = "window.$IOS.callbacks[" + id + "]";
       this.callNative(component, func, params);
     },
-    'callbacks': {},
-    'queue': [],
-    'readyForNext': true,
-    'processNext': function() {
-      if (!$IOS.readyForNext) {
-        return;
-      }
-      var obj = $IOS.queue.shift();
-      if ($IOS.queue.length == 0) {
-        clearInterval($IOS.interval);
-        $IOS.interval = null;
-      }
-      if (obj == null) {
-        return;
-      }
-      if ($IOS.timerID) {
-        clearTimeout($IOS.timerID);
-      }
-      $IOS.timerID = window.setTimeout(function() {
-        $IOS.queue.unshift(obj);
-        $IOS.readyForNext = true;
-      }, 500);
-      console.log(obj);
-
-      var component = obj.component;
-      var func = obj.func;
-      var params = obj.params;
-
-      var frame = this.getFrame();
-      var url = 'native://' + component + '/' + func + '?';
-      if (params) {
-        var first = true;
-        for (var key in params) {
-          if (!first) {
-            url += '&';
-          }
-          url += key + '=' + encodeURIComponent(params[key]);
-          first = false;
-        }
-        url += '&_dummy_=' + new Date().getTime();
-      }
-      $IOS.readyForNext = false;
-      frame.src = url;
-    }
+    'callbacks': {}
   };
  
   document.body.style.webkitTouchCallout = 'none';
   document.body.style.KhtmlUserSelect = 'none';
   document.body.style.webkitUserSelect = 'none';
-  return "SUCCESS";
 })();

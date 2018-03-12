@@ -21,6 +21,7 @@
  *******************************************************************************/
 
 #import <UIKit/UIKit.h>
+#import <WebKit/WebKit.h>
 
 //! Project version number for HLPWebView.
 FOUNDATION_EXPORT double HLPWebViewVersionNumber;
@@ -52,21 +53,22 @@ typedef NS_ENUM(NSInteger, HLPWebviewControl) {
 
 @protocol HLPTTSProtocol <NSObject>
 @required
-- (void)speak:(NSString *_Nonnull)text force:(BOOL)isForce;
+- (void)speak:(NSString *_Nonnull)text force:(BOOL)isForce completionHandler:(void(^_Nullable)(void))completion;
 - (BOOL)isSpeaking;
 - (void)vibrate;
 @end
 
-@interface HLPWebView : HLPWebViewCore <UIWebViewDelegate>
+@interface HLPWebView : HLPWebViewCore <WKUIDelegate, WKNavigationDelegate>
 
 @property (nullable, nonatomic, assign) id<HLPWebViewDelegate> delegate;
 @property (nullable, nonatomic, assign) id<HLPTTSProtocol> tts;
 
 @property (nonatomic) BOOL isDeveloperMode;
+@property (nonatomic) BOOL isAccessible;
 @property (nonatomic) NSString *_Nullable userMode;
 
 - (void)triggerWebviewControl:(HLPWebviewControl)control;
 - (void)sendData:(NSObject *_Nonnull)data withName:(NSString *_Nonnull)name;
-- (NSDictionary *_Nonnull)getState;
-
+- (void)getStateWithCompletionHandler:(void(^_Nonnull)(NSDictionary *_Nonnull))completion;
+- (void)setFullScreenForView:(UIView*)view;
 @end
