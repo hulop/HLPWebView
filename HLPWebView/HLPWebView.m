@@ -256,16 +256,12 @@
 }
 
 
-- (void)getStateWithCompletionHandler:(void (^)(NSDictionary * _Nonnull))completion
+- (void)getStateWithCompletionHandler:(void (^)(NSDictionary * _Nullable))completion
 {
-    [self evaluateJavaScript:@"(function(){return JSON.stringify($hulop.map.getState());})()" completionHandler:^(id _Nullable ret, NSError * _Nullable error) {
-        NSString *state = ret;
-        NSError *error2 = nil;
-        NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[state dataUsingEncoding:NSUTF8StringEncoding] options:0 error:&error2];
+    [self evaluateJavaScript:@"(function(){return $hulop.map.getState();})()"
+           completionHandler:^(id _Nullable json, NSError * _Nullable error) {
         if (json) {
             completion(json);
-        } else {
-            NSLog(@"%@", error.localizedDescription);
         }
         completion(nil);
     }];

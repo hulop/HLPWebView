@@ -69,6 +69,6 @@ typedef NS_ENUM(NSInteger, HLPWebviewControl) {
 
 - (void)triggerWebviewControl:(HLPWebviewControl)control;
 - (void)sendData:(NSObject *_Nonnull)data withName:(NSString *_Nonnull)name;
-- (void)getStateWithCompletionHandler:(void(^_Nonnull)(NSDictionary *_Nonnull))completion;
-- (void)setFullScreenForView:(UIView*)view;
+- (void)getStateWithCompletionHandler:(void(^_Nonnull)(NSDictionary *_Nullable))completion;
+- (void)setFullScreenForView:(UIView* _Nonnull)view;
 @end
