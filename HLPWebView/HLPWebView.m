@@ -321,36 +321,22 @@
 
 - (void)fireWebViewInsertBridge:(WKWebView *)webView
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        [self insertHLPBridgeWithCompletion:^(BOOL result) {
-            if (result) {
-                [NSTimer scheduledTimerWithTimeInterval:0.1 repeats:YES block:^(NSTimer * _Nonnull timer) {
-                    if (_callback != nil) {
-                        NSLog(@"callback is ready %@", _callback);
-                        [timer invalidate];
-                        if ([_delegate respondsToSelector:@selector(webViewDidInsertBridge:)]) {
-                            [_delegate webViewDidInsertBridge:webView];
-                        }
-                    }
-                }];
-            } else {
-                [self fireWebViewInsertBridge:webView];
-            }
-        }];
-    });
+    NSLog(@"HLPWebView %@", NSStringFromSelector(_cmd));
+    
+    NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
+    NSString *path = [bundle pathForResource:@"hlp_bridge" ofType:@"js"];
+    NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
+    WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
+    [self.configuration.userContentController addUserScript: userScript];    
+    
+    if ([_delegate respondsToSelector:@selector(webViewDidInsertBridge:)]) {
+        [_delegate webViewDidInsertBridge:webView];
+    }
 }
 
 -(void)insertHLPBridgeWithCompletion:(void(^_Nonnull)(BOOL))completion
 {
-    NSBundle *bundle = [NSBundle bundleForClass:[HLPWebView class]];
-    NSString *path = [bundle pathForResource:@"hlp_bridge" ofType:@"js"];
-    NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
-    
-    [self evaluateJavaScript:script completionHandler:^(id _Nullable result, NSError * _Nullable error) {
-        NSLog(@"%@ - %@", NSStringFromSelector(_cmd), result);
-        completion([result isEqualToString:@"SUCCESS"]);
-    }];
+    completion(YES);
 }
 
 - (void)webView:(WKWebView *)webView openURL:(NSURL *)url

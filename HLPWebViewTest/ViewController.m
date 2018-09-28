@@ -47,7 +47,7 @@
 
 - (void)webViewDidInsertBridge:(WKWebView *)webView
 {
-    NSLog(@"%@", NSStringFromSelector(_cmd));
+    NSLog(@"ViewController %@", NSStringFromSelector(_cmd));
 }
 
 - (void)didReceiveMemoryWarning {

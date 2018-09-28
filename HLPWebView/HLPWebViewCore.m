@@ -208,6 +208,8 @@
     if ([_delegate respondsToSelector:@selector(webView:didStartProvisionalNavigation:)]) {
         [_delegate webView:webView didStartProvisionalNavigation:navigation];
     }
+    
+    [self fireWebViewInsertBridge:webView];
 }
 - (void)webView:(WKWebView *)webView didFinishNavigation:(WKNavigation *)navigation
 {
