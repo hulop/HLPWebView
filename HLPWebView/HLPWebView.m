@@ -76,6 +76,7 @@
 {
     self = [super initWithFrame:frame configuration:configuration];
     if (self) {
+        _userMode = @"user_general";
         NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
         NSString *path = [bundle pathForResource:@"hlp_bridge" ofType:@"js"];
         NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
@@ -103,8 +104,6 @@
 - (void)setConfig:(NSDictionary *)config
 {
     [super setConfig:config];
-    
-    _userMode = @"user_general";
 }
 
 - (NSURL*)buildTargetURL
