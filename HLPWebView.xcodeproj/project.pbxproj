@@ -7,8 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		3077FDE726E74D8F006404B1 /* HLPWebViewCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 3077FDE526E74D8F006404B1 /* HLPWebViewCore.h */; };
-		3077FDE826E74D8F006404B1 /* HLPWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3077FDE626E74D8F006404B1 /* HLPWebView.h */; };
+		3077FDED26E7EA31006404B1 /* HLPWebViewCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 3077FDEB26E7EA31006404B1 /* HLPWebViewCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3077FDEE26E7EA31006404B1 /* HLPWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3077FDEC26E7EA31006404B1 /* HLPWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		7EA121BD1F416ED2005BB92A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121BC1F416ED2005BB92A /* main.m */; };
 		7EA121C01F416ED2005BB92A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121BF1F416ED2005BB92A /* AppDelegate.m */; };
 		7EA121C31F416ED2005BB92A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121C21F416ED2005BB92A /* ViewController.m */; };
@@ -50,8 +50,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		3077FDE526E74D8F006404B1 /* HLPWebViewCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPWebViewCore.h; sourceTree = "<group>"; };
-		3077FDE626E74D8F006404B1 /* HLPWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPWebView.h; sourceTree = "<group>"; };
+		3077FDEB26E7EA31006404B1 /* HLPWebViewCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPWebViewCore.h; sourceTree = "<group>"; };
+		3077FDEC26E7EA31006404B1 /* HLPWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPWebView.h; sourceTree = "<group>"; };
 		7EA121B91F416ED2005BB92A /* HLPWebViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPWebViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA121BC1F416ED2005BB92A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7EA121BE1F416ED2005BB92A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -105,10 +105,18 @@
 		3077FDE426E74D8F006404B1 /* include */ = {
 			isa = PBXGroup;
 			children = (
-				3077FDE526E74D8F006404B1 /* HLPWebViewCore.h */,
-				3077FDE626E74D8F006404B1 /* HLPWebView.h */,
+				3077FDEA26E7EA31006404B1 /* HLPWebView */,
 			);
 			path = include;
+			sourceTree = "<group>";
+		};
+		3077FDEA26E7EA31006404B1 /* HLPWebView */ = {
+			isa = PBXGroup;
+			children = (
+				3077FDEB26E7EA31006404B1 /* HLPWebViewCore.h */,
+				3077FDEC26E7EA31006404B1 /* HLPWebView.h */,
+			);
+			path = HLPWebView;
 			sourceTree = "<group>";
 		};
 		7EA121BA1F416ED2005BB92A /* HLPWebViewTest */ = {
@@ -174,8 +182,8 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				3077FDE726E74D8F006404B1 /* HLPWebViewCore.h in Headers */,
-				3077FDE826E74D8F006404B1 /* HLPWebView.h in Headers */,
+				3077FDED26E7EA31006404B1 /* HLPWebViewCore.h in Headers */,
+				3077FDEE26E7EA31006404B1 /* HLPWebView.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
