@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		3077FDED26E7EA31006404B1 /* HLPWebViewCore.h in Headers */ = {isa = PBXBuildFile; fileRef = 3077FDEB26E7EA31006404B1 /* HLPWebViewCore.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		3077FDEE26E7EA31006404B1 /* HLPWebView.h in Headers */ = {isa = PBXBuildFile; fileRef = 3077FDEC26E7EA31006404B1 /* HLPWebView.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		3077FDEF26E7ECAA006404B1 /* HLPWebView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED25F1ED2D91300B75760 /* HLPWebView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		3077FDF026E7ECAE006404B1 /* HLPWebView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED25F1ED2D91300B75760 /* HLPWebView.framework */; };
+		307E32F02706125F0058D4F8 /* ResourceBundle.m in Sources */ = {isa = PBXBuildFile; fileRef = 307E32EF2706125F0058D4F8 /* ResourceBundle.m */; };
 		7EA121BD1F416ED2005BB92A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121BC1F416ED2005BB92A /* main.m */; };
 		7EA121C01F416ED2005BB92A /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121BF1F416ED2005BB92A /* AppDelegate.m */; };
 		7EA121C31F416ED2005BB92A /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA121C21F416ED2005BB92A /* ViewController.m */; };
@@ -18,8 +21,6 @@
 		7EA5E50B1F417AB9008470D9 /* HLPWebView.m in Sources */ = {isa = PBXBuildFile; fileRef = A93ED26C1ED2D9BB00B75760 /* HLPWebView.m */; };
 		7EA5E50E1F419054008470D9 /* HLPWebViewCore.m in Sources */ = {isa = PBXBuildFile; fileRef = 7EA5E50D1F419054008470D9 /* HLPWebViewCore.m */; };
 		7EA5E5101F4199EE008470D9 /* hlp_bridge.js in Resources */ = {isa = PBXBuildFile; fileRef = 7EA5E50F1F4199EE008470D9 /* hlp_bridge.js */; };
-		7EA5E5111F41A642008470D9 /* HLPWebView.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED25F1ED2D91300B75760 /* HLPWebView.framework */; };
-		7EA5E5121F41A642008470D9 /* HLPWebView.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED25F1ED2D91300B75760 /* HLPWebView.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		A90B734A1ED401260082E149 /* ios_bridge.js in Resources */ = {isa = PBXBuildFile; fileRef = A90B73491ED401260082E149 /* ios_bridge.js */; };
 		A929F6E11EEFC9FC00A8DAF4 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED2751ED2DBB000B75760 /* Foundation.framework */; };
 		A929F6E21EEFCA0800A8DAF4 /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = A93ED2731ED2DBA900B75760 /* UIKit.framework */; };
@@ -42,7 +43,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				7EA5E5121F41A642008470D9 /* HLPWebView.framework in Embed Frameworks */,
+				3077FDEF26E7ECAA006404B1 /* HLPWebView.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -52,6 +53,8 @@
 /* Begin PBXFileReference section */
 		3077FDEB26E7EA31006404B1 /* HLPWebViewCore.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPWebViewCore.h; sourceTree = "<group>"; };
 		3077FDEC26E7EA31006404B1 /* HLPWebView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HLPWebView.h; sourceTree = "<group>"; };
+		307E32EE270611DA0058D4F8 /* ResourceBundle.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ResourceBundle.h; sourceTree = "<group>"; };
+		307E32EF2706125F0058D4F8 /* ResourceBundle.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = ResourceBundle.m; sourceTree = "<group>"; };
 		7EA121B91F416ED2005BB92A /* HLPWebViewTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HLPWebViewTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7EA121BC1F416ED2005BB92A /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		7EA121BE1F416ED2005BB92A /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -77,7 +80,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				7EA5E5111F41A642008470D9 /* HLPWebView.framework in Frameworks */,
+				3077FDF026E7ECAE006404B1 /* HLPWebView.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -171,6 +174,8 @@
 				A90B73491ED401260082E149 /* ios_bridge.js */,
 				7EA5E50F1F4199EE008470D9 /* hlp_bridge.js */,
 				A93ED2621ED2D91300B75760 /* Info.plist */,
+				307E32EE270611DA0058D4F8 /* ResourceBundle.h */,
+				307E32EF2706125F0058D4F8 /* ResourceBundle.m */,
 			);
 			path = HLPWebView;
 			sourceTree = "<group>";
@@ -306,6 +311,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				7EA5E50B1F417AB9008470D9 /* HLPWebView.m in Sources */,
+				307E32F02706125F0058D4F8 /* ResourceBundle.m in Sources */,
 				7EA5E50E1F419054008470D9 /* HLPWebViewCore.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

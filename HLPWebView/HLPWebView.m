@@ -21,6 +21,7 @@
  *******************************************************************************/
 
 #import "HLPWebView.h"
+#import "ResourceBundle.h"
 
 #define UI_PAGE @"%@://%@/%@mobile.jsp?noheader&noclose&id=%@"
 
@@ -77,8 +78,7 @@
     self = [super initWithFrame:frame configuration:configuration];
     if (self) {
         _userMode = @"user_general";
-        NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
-        NSString *path = [bundle pathForResource:@"hlp_bridge" ofType:@"js"];
+        NSString *path = [SWIFTPM_MODULE_BUNDLE pathForResource:@"hlp_bridge" ofType:@"js"];
         NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
         WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
         [self.configuration.userContentController addUserScript: userScript];
