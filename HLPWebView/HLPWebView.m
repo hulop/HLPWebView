@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  *******************************************************************************/
 
-#import "HLPWebView.h"
+#import "HLPWebView/HLPWebView.h"
 #import "ResourceBundle.h"
 
 #define UI_PAGE @"%@://%@/%@mobile.jsp?noheader&noclose&id=%@"

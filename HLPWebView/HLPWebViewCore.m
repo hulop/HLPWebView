@@ -20,7 +20,7 @@
  * THE SOFTWARE.
  *******************************************************************************/
 
-#import "HLPWebViewCore.h"
+#import "HLPWebView/HLPWebViewCore.h"
 
 #define URL_FORMAT @"%@://%@/%@"
 #define LOADING_TIMEOUT 30
