@@ -63,6 +63,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
+    self = [super initWithCoder:aDecoder];
     [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
     return nil;
 }
@@ -134,10 +135,10 @@
     [self registerNativeFunc:^(NSDictionary *param, WKWebView *webView) {
         NSString *text = [param objectForKey:@"text"];
         BOOL flush = [[param objectForKey:@"flush"] boolValue];
-        if ([_tts respondsToSelector:@selector(speak:force:completionHandler:)]) {
-            [_tts speak:text force:flush completionHandler:^{
+        if ([self->_tts respondsToSelector:@selector(speak:force:completionHandler:)]) {
+            [self->_tts speak:text force:flush completionHandler:^{
                 NSString *name = [param objectForKey:@"callbackname"];
-                [webView evaluateJavaScript:[NSString stringWithFormat:@"%@.%@()", _callback, name] completionHandler:nil];
+                [webView evaluateJavaScript:[NSString stringWithFormat:@"%@.%@()", self->_callback, name] completionHandler:nil];
             }];
         }
     }
@@ -146,26 +147,26 @@
     
     [self registerNativeFunc:^(NSDictionary *param, WKWebView *wv) {
         NSString *result = @"false";
-        if ([_tts respondsToSelector:@selector(isSpeaking)]) {
-            result = [_tts isSpeaking] ? @"true" : @"false";
+        if ([self->_tts respondsToSelector:@selector(isSpeaking)]) {
+            result = [self->_tts isSpeaking] ? @"true" : @"false";
         }
         NSString *name = param[@"callbackname"];
-        [wv evaluateJavaScript:[NSString stringWithFormat:@"%@.%@(%@)", _callback, name, result] completionHandler:nil];
+        [wv evaluateJavaScript:[NSString stringWithFormat:@"%@.%@(%@)", self->_callback, name, result] completionHandler:nil];
     }
                   withName:@"isSpeaking"
                inComponent:@"SpeechSynthesizer"];
     [self registerNativeFunc:^(NSDictionary *param, WKWebView *wv) {
         if ([param objectForKey:@"value"]) {
-            _callback = [param objectForKey:@"value"];
-            NSLog(@"callback method is %@", _callback);
+            self->_callback = [param objectForKey:@"value"];
+            NSLog(@"callback method is %@", self->_callback);
             [self updatePreferences];
         }
     }
                   withName:@"callback"
                inComponent:@"Property"];
     [self registerNativeFunc:^(NSDictionary *param, WKWebView *wv) {
-        if ([_delegate respondsToSelector:@selector(webView:didChangeLatitude:longitude:floor:synchronized:)]) {
-            [_delegate webView:self didChangeLatitude:[param[@"lat"] doubleValue] longitude:[param[@"lng"] doubleValue] floor:[param[@"floor"] doubleValue] synchronized:[param[@"sync"] boolValue]];
+        if ([self->_delegate respondsToSelector:@selector(webView:didChangeLatitude:longitude:floor:synchronized:)]) {
+            [self->_delegate webView:self didChangeLatitude:[param[@"lat"] doubleValue] longitude:[param[@"lng"] doubleValue] floor:[param[@"floor"] doubleValue] synchronized:[param[@"sync"] boolValue]];
         }
     }
                   withName:@"mapCenter"
@@ -178,22 +179,22 @@
         if ([text rangeOfString:@"buildingChanged,"].location == 0) {
             NSData *data = [[text substringFromIndex:[@"buildingChanged," length]] dataUsingEncoding:NSUTF8StringEncoding];
             NSDictionary *param = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if ([_delegate respondsToSelector:@selector(webView:didChangeBuilding:)]) {
-                [_delegate webView:self didChangeBuilding:param[@"building"]];
+            if ([self->_delegate respondsToSelector:@selector(webView:didChangeBuilding:)]) {
+                [self->_delegate webView:self didChangeBuilding:param[@"building"]];
             }
         }
         if ([text rangeOfString:@"stateChanged,"].location == 0) {
             NSData *data = [[text substringFromIndex:[@"stateChanged," length]] dataUsingEncoding:NSUTF8StringEncoding];
             NSDictionary *param = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if ([_delegate respondsToSelector:@selector(webView:didChangeUIPage:inNavigation:)]) {
-                [_delegate webView:self didChangeUIPage:param[@"page"] inNavigation:[param[@"navigation"] boolValue]];
+            if ([self->_delegate respondsToSelector:@selector(webView:didChangeUIPage:inNavigation:)]) {
+                [self->_delegate webView:self didChangeUIPage:param[@"page"] inNavigation:[param[@"navigation"] boolValue]];
             }
         }
         if ([text rangeOfString:@"navigationFinished,"].location == 0) {
             NSData *data = [[text substringFromIndex:[@"navigationFinished," length]] dataUsingEncoding:NSUTF8StringEncoding];
             NSDictionary *param = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-            if ([_delegate respondsToSelector:@selector(webView:didFinishNavigationStart:end:from:to:)]) {
-                [_delegate webView:self didFinishNavigationStart:[param[@"start"] doubleValue] end:[param[@"end"] doubleValue] from:param[@"from"] to:param[@"to"]];
+            if ([self->_delegate respondsToSelector:@selector(webView:didFinishNavigationStart:end:from:to:)]) {
+                [self->_delegate webView:self didFinishNavigationStart:[param[@"start"] doubleValue] end:[param[@"end"] doubleValue] from:param[@"from"] to:param[@"to"]];
             }
         }
         NSLog(@"%@", text);
@@ -202,8 +203,8 @@
                inComponent:@"System"];
     
     [self registerNativeFunc:^(NSDictionary *param, WKWebView *webView) {
-        if ([_tts respondsToSelector:@selector(vibrate)]) {
-            [_tts vibrate];
+        if ([self->_tts respondsToSelector:@selector(vibrate)]) {
+            [self->_tts vibrate];
         }
     }
                   withName:@"vibrate"

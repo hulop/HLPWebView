@@ -46,6 +46,7 @@
 
 - (instancetype)initWithCoder:(NSCoder *)aDecoder
 {
+    self = [super initWithCoder:aDecoder];
     [NSException raise:@"Invalid init" format:@"use initWithFrame:configuration:"];
     return nil;
 }
