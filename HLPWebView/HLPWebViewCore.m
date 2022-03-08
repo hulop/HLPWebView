@@ -21,6 +21,7 @@
  *******************************************************************************/
 
 #import "HLPWebView/HLPWebViewCore.h"
+#import "ResourceBundle.h"
 
 #define URL_FORMAT @"%@://%@/%@"
 #define LOADING_TIMEOUT 30
@@ -69,8 +70,7 @@
         if (!self.configuration.userContentController) {
             self.configuration.userContentController = [[WKUserContentController alloc] init];
         }        
-        NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
-        NSString *path = [bundle pathForResource:@"ios_bridge" ofType:@"js"];
+        NSString *path = [SWIFTPM_MODULE_BUNDLE pathForResource:@"ios_bridge" ofType:@"js"];
         NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
         WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
         [self.configuration.userContentController addUserScript: userScript];
