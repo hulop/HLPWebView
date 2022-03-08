@@ -17,7 +17,6 @@ let package = Package(
           name: "HLPWebView",
           path: "HLPWebView",
           resources: [
-            .process("icons.xcassets"),
             .copy("hlp_bridge.js"),
             .copy("ios_bridge.js")
           ]
