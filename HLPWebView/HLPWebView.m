@@ -323,8 +323,7 @@
 {
     NSLog(@"HLPWebView %@", NSStringFromSelector(_cmd));
     
-    NSBundle *bundle = [NSBundle bundleForClass:[HLPWebViewCore class]];
-    NSString *path = [bundle pathForResource:@"hlp_bridge" ofType:@"js"];
+    NSString *path = [SWIFTPM_MODULE_BUNDLE pathForResource:@"hlp_bridge" ofType:@"js"];
     NSString *script = [NSString stringWithContentsOfFile:path encoding:NSUTF8StringEncoding error:nil];
     WKUserScript *userScript = [[WKUserScript alloc] initWithSource:script injectionTime:WKUserScriptInjectionTimeAtDocumentEnd forMainFrameOnly:YES];
     [self.configuration.userContentController addUserScript: userScript];    
